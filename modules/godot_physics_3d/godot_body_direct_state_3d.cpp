@@ -70,7 +70,9 @@ Basis GodotPhysicsDirectBodyState3D::get_inverse_inertia_tensor() const {
 }
 
 void GodotPhysicsDirectBodyState3D::set_linear_velocity(const Vector3 &p_velocity) {
-	body->wakeup();
+	if (!p_velocity.is_zero_approx()) {
+		body->wakeup();
+	}
 	body->set_linear_velocity(p_velocity);
 }
 
@@ -79,7 +81,9 @@ Vector3 GodotPhysicsDirectBodyState3D::get_linear_velocity() const {
 }
 
 void GodotPhysicsDirectBodyState3D::set_angular_velocity(const Vector3 &p_velocity) {
-	body->wakeup();
+	if (!p_velocity.is_zero_approx()) {
+		body->wakeup();
+	}
 	body->set_angular_velocity(p_velocity);
 }
 

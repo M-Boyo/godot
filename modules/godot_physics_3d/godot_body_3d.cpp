@@ -383,12 +383,16 @@ void GodotBody3D::set_state(PhysicsServer3D::BodyState p_state, const Variant &p
 		case PhysicsServer3D::BODY_STATE_LINEAR_VELOCITY: {
 			linear_velocity = p_variant;
 			constant_linear_velocity = linear_velocity;
-			wakeup();
+			if (!Vector3(p_variant).is_zero_approx()) {
+				wakeup();
+			}
 		} break;
 		case PhysicsServer3D::BODY_STATE_ANGULAR_VELOCITY: {
 			angular_velocity = p_variant;
 			constant_angular_velocity = angular_velocity;
-			wakeup();
+			if (!Vector3(p_variant).is_zero_approx()) {
+				wakeup();
+			}
 
 		} break;
 		case PhysicsServer3D::BODY_STATE_SLEEPING: {
