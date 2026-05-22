@@ -373,6 +373,12 @@ void GodotStep3D::step(GodotSpace3D *p_space, real_t p_delta) {
 		profile_begtime = profile_endtime;
 	}
 
+	/* SLEEP / WAKE UP ISLANDS */
+
+	for (uint32_t island_index = 0; island_index < body_island_count; ++island_index) {
+		_check_suspend(body_islands[island_index]);
+	}
+
 	/* INTEGRATE VELOCITIES */
 
 	b = body_list->first();
@@ -380,12 +386,6 @@ void GodotStep3D::step(GodotSpace3D *p_space, real_t p_delta) {
 		const SelfList<GodotBody3D> *n = b->next();
 		b->self()->integrate_velocities(p_delta);
 		b = n;
-	}
-
-	/* SLEEP / WAKE UP ISLANDS */
-
-	for (uint32_t island_index = 0; island_index < body_island_count; ++island_index) {
-		_check_suspend(body_islands[island_index]);
 	}
 
 	/* UPDATE SOFT BODY CONSTRAINTS */
